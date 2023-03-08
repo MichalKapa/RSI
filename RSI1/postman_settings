@@ -1,0 +1,19 @@
+POST: http://127.0.0.1:8080/xmlrpc
+
+Headers:  Content-Type: text/xml
+
+Body: (raw -> XML)
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<methodCall>
+   <methodName>Proc.add</methodName>
+   <params>
+      <param>
+         <value><int>23</int></value>
+      </param>
+		 
+      <param>
+         <value><int>-29</int></value>
+      </param>
+   </params>
+</methodCall>

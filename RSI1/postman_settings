@@ -9,11 +9,11 @@ Body: (raw -> XML)
    <methodName>Proc.add</methodName>
    <params>
       <param>
-         <value><int>23</int></value>
+         <value><int>2</int></value>
       </param>
 		 
       <param>
-         <value><int>-29</int></value>
+         <value><int>1</int></value>
       </param>
    </params>
 </methodCall>

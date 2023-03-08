@@ -9,12 +9,11 @@ public class Server {
     var xmlRpcServer = webServer.getXmlRpcServer();
     var handler = new PropertyHandlerMapping();
     try {
+      handler.addHandler("MessagesService", MessageService.class);
       handler.addHandler("Proc", Proc.class);
       xmlRpcServer.setHandlerMapping(handler);
       webServer.start();
-      System.out.println(" Server started...");
-    } catch (Exception e) {
-      System.out.println("Something went wrong!");
-    }
+      System.out.println(" Server started..."); } catch (Exception e) {
+      System.out.println("Something went wrong!"); }
   }
 }

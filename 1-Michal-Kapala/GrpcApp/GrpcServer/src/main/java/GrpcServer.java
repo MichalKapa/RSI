@@ -44,5 +44,20 @@ public class GrpcServer {
             responseObserver.onCompleted();
             System.out.println("...called UnaryProcedure - end");
         }
+        public void streamProcedure(TheRequest req,
+                                    StreamObserver<TheResponse> responseObserver) {
+            for (int i = 0; i < 9; i++) {
+                TheResponse response = TheResponse.newBuilder()
+                        .setMessage("Stream chunk " + (i + 1)).build();
+                // [enter here Thread.sleep to easier trace the operation]
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                responseObserver.onNext(response);
+            }
+            responseObserver.onCompleted();
+        }
     }
 }

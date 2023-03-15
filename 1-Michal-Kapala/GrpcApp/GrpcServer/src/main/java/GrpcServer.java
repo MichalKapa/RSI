@@ -46,16 +46,45 @@ public class GrpcServer {
         }
         public void streamProcedure(TheRequest req,
                                     StreamObserver<TheResponse> responseObserver) {
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < 6; i++) {
                 TheResponse response = TheResponse.newBuilder()
                         .setMessage("Stream chunk " + (i + 1)).build();
                 // [enter here Thread.sleep to easier trace the operation]
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 responseObserver.onNext(response);
+            }
+            responseObserver.onCompleted();
+        }
+
+        public void procFibProcedure(TheRequest req,
+                                    StreamObserver<TheResponse> responseObserver) {
+            int n1=0,n2=1,n3,count=10;
+            TheResponse response = TheResponse.newBuilder()
+                    .setMessage(n1 + " " + n2).build();
+            // [enter here Thread.sleep to easier trace the operation]
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            responseObserver.onNext(response);
+            for (int i=2;i<count;++i) {
+                n3=n1+n2;
+                response = TheResponse.newBuilder()
+                        .setMessage(" " + n3).build();
+                // [enter here Thread.sleep to easier trace the operation]
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                responseObserver.onNext(response);
+                n1=n2;
+                n2=n3;
             }
             responseObserver.onCompleted();
         }

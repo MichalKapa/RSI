@@ -8,6 +8,7 @@ service ServiceName {
   // Remote procedures:
   rpc unaryProcedure (TheRequest) returns (TheResponse) {}
   rpc streamProcedure (TheRequest) returns (stream TheResponse) {}
+  rpc procFibProcedure (TheRequest) returns (stream TheResponse) {}
 }
 // The request message containing the user's name and age.
 message TheRequest {

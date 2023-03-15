@@ -62,9 +62,13 @@ public class GrpcServer {
 
         public void procFibProcedure(TheRequest req,
                                     StreamObserver<TheResponse> responseObserver) {
-            int n1=0,n2=1,n3,count=10;
+
+            int count=10;
+            boolean isSquare = true;
+
+            int n1=1,n2=1,n3;
             TheResponse response = TheResponse.newBuilder()
-                    .setMessage(n1 + " " + n2).build();
+                    .setMessage(n1 + " : " + (isSquare ? 1 : "")).build();
             // [enter here Thread.sleep to easier trace the operation]
             try {
                 Thread.sleep(1000);
@@ -72,10 +76,21 @@ public class GrpcServer {
                 e.printStackTrace();
             }
             responseObserver.onNext(response);
+
+            response = TheResponse.newBuilder()
+                    .setMessage(n2  + " : " + (isSquare ? 1 : "")).build();
+            // [enter here Thread.sleep to easier trace the operation]
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            responseObserver.onNext(response);
+
             for (int i=2;i<count;++i) {
                 n3=n1+n2;
                 response = TheResponse.newBuilder()
-                        .setMessage(" " + n3).build();
+                        .setMessage(n3 + " : " + (isSquare ? (int)Math.pow(n3, 2) : "")).build();
                 // [enter here Thread.sleep to easier trace the operation]
                 try {
                     Thread.sleep(1000);

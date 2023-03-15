@@ -20,35 +20,35 @@ public class GrpcClient {
         nonbStub = ServiceNameGrpc.newStub(channel);
         TheRequest request = TheRequest.newBuilder().setName("Michal")
                 .setAge(33).build();
-        System.out.println("...calling unaryProcedure");
-        TheResponse response = bStub.unaryProcedure(request);
-        System.out.println("...after calling unaryProcedure");
-        System.out.println("--> Response: " + response);
-
-        Iterator<TheResponse> respIterator;
-        System.out.println("...calling streamProcedure");
-        respIterator = bStub.streamProcedure(request);
-        System.out.println("...after calling streamProcedure");
-        TheResponse strResponse;
-        while(respIterator.hasNext()) {
-            strResponse = respIterator.next();
-            System.out.println("-->" + strResponse.getMessage());
-        }
-
-        System.out.println("...async calling unaryProcedure");
-        nonbStub.unaryProcedure(request, new UnaryObs());
-        System.out.println("...after async calling unaryProcedure");
-
-        System.out.println("...async calling streamProcedure");
-        nonbStub.streamProcedure(request, new UnaryObs());
-        System.out.println("...after async calling streamProcedure");
-
+//        System.out.println("...calling unaryProcedure");
+//        TheResponse response = bStub.unaryProcedure(request);
+//        System.out.println("...after calling unaryProcedure");
+//        System.out.println("--> Response: " + response);
+//
+//        Iterator<TheResponse> respIterator;
+//        System.out.println("...calling streamProcedure");
+//        respIterator = bStub.streamProcedure(request);
+//        System.out.println("...after calling streamProcedure");
+//        TheResponse strResponse;
+//        while(respIterator.hasNext()) {
+//            strResponse = respIterator.next();
+//            System.out.println("-->" + strResponse.getMessage());
+//        }
+//
 //        System.out.println("...async calling unaryProcedure");
-//        nonbStub.procFibProcedure(request, new UnaryObs());
+//        nonbStub.unaryProcedure(request, new UnaryObs());
 //        System.out.println("...after async calling unaryProcedure");
+//
+//        System.out.println("...async calling streamProcedure");
+//        nonbStub.streamProcedure(request, new UnaryObs());
+//        System.out.println("...after async calling streamProcedure");
+
+        System.out.println("...async calling fib");
+        nonbStub.procFibProcedure(request, new UnaryObs());
+        System.out.println("...after async fib");
 
         try {
-            Thread.sleep(10000);
+            Thread.sleep(30000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

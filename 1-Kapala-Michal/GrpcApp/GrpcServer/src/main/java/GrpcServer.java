@@ -1,7 +1,9 @@
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
-import java.io.IOException;
+
+import java.io.*;
+
 import org.example.model.TheRequest;
 import org.example.model.TheResponse;
 import org.example.model.ServiceNameGrpc;
@@ -101,6 +103,37 @@ public class GrpcServer {
                 n1=n2;
                 n2=n3;
             }
+            responseObserver.onCompleted();
+        }
+
+        public void streamFileProcedure(TheRequest req,
+                                    StreamObserver<TheResponse> responseObserver) throws IOException {
+
+            String absPath = "/Users/hitit/sem6/RSI/1-Kapala-Michal/GrpcApp/Images/";
+            byte[] bytes = new byte[0];
+            try {
+                File file = new File(absPath + "ServerImages/plik1.jpg");
+                FileInputStream fileInputStream = new FileInputStream(file);
+                long BUF_SIZE = file.length();
+                bytes = new byte[(int) BUF_SIZE];
+                fileInputStream.read(bytes);
+                fileInputStream.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(absPath + "ClientImages/output.jpg"))));
+            dos.write(bytes);
+            dos.close();
+
+            TheResponse response = TheResponse.newBuilder()
+                    .setMessage("Zapisano plik!").build();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
     }

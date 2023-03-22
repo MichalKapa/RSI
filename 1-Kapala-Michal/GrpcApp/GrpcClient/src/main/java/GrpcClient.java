@@ -20,10 +20,10 @@ public class GrpcClient {
         nonbStub = ServiceNameGrpc.newStub(channel);
         TheRequest request = TheRequest.newBuilder().setName("Michal")
                 .setAge(33).build();
-//        System.out.println("...calling unaryProcedure");
-//        TheResponse response = bStub.unaryProcedure(request);
-//        System.out.println("...after calling unaryProcedure");
-//        System.out.println("--> Response: " + response);
+        System.out.println("...calling unaryProcedure");
+        TheResponse response = bStub.unaryProcedure(request);
+        System.out.println("...after calling unaryProcedure");
+        System.out.println("--> Response: " + response);
 //
 //        Iterator<TheResponse> respIterator;
 //        System.out.println("...calling streamProcedure");
@@ -42,9 +42,13 @@ public class GrpcClient {
 //        System.out.println("...async calling streamProcedure");
 //        nonbStub.streamProcedure(request, new UnaryObs());
 //        System.out.println("...after async calling streamProcedure");
+//
+//        System.out.println("...async calling fib");
+//        nonbStub.procFibProcedure(request, new UnaryObs());
+//        System.out.println("...after async fib");
 
         System.out.println("...async calling fib");
-        nonbStub.procFibProcedure(request, new UnaryObs());
+        nonbStub.streamFileProcedure(request, new UnaryObs());
         System.out.println("...after async fib");
 
         try {

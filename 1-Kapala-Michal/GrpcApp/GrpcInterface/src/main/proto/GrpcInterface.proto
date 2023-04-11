@@ -9,7 +9,10 @@ service ServiceName {
   rpc unaryProcedure (TheRequest) returns (TheResponse) {}
   rpc streamProcedure (TheRequest) returns (stream TheResponse) {}
   rpc procFibProcedure (TheRequest) returns (stream TheResponse) {}
-  rpc streamFileProcedure (TheRequest) returns (stream TheResponse) {}
+  rpc streamFileProcedure (ByteRequest) returns (stream ByteResponse) {}
+  rpc uploadFile(stream FileUploadRequest) returns(FileUploadResponse);
+  rpc addCar(CarRequest) returns(CarResponse);
+  rpc getCars(CarRequest) returns(CarResponse);
 }
 // The request message containing the user's name and age.
 message TheRequest {
@@ -20,8 +23,49 @@ message TheRequest {
 message TheResponse {
   string message = 1;
 }
-
+message ByteRequest {
+  string file = 1;
+}
 message ByteResponse {
   int32 num_of_bytes = 1;
   bytes chunk = 2;
+}
+
+message MetaData {
+  string name = 1;
+  string type = 2;
+}
+
+message File {
+  bytes content = 1;
+}
+
+message FileUploadRequest {
+  oneof request {
+    MetaData metadata = 1;
+    File file = 2;
+  }
+}
+
+enum Status {
+  PENDING = 0;
+  IN_PROGRESS = 1;
+  SUCCESS = 2;
+  FAILED = 3;
+}
+
+message FileUploadResponse {
+  string name = 1;
+  Status status = 2;
+}
+
+message CarRequest {
+  string name = 1;
+  int32 age = 2;
+  string image = 3;
+  bool isNew = 4;
+}
+
+message CarResponse {
+  string message = 1;
 }

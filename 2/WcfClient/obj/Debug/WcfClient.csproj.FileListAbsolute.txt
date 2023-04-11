@@ -1,0 +1,8 @@
+F:\Marta\Studia\Semestr_VI\RSI\L\2\WcfClient\bin\Debug\WcfClient.exe.config
+F:\Marta\Studia\Semestr_VI\RSI\L\2\WcfClient\bin\Debug\WcfClient.exe
+F:\Marta\Studia\Semestr_VI\RSI\L\2\WcfClient\bin\Debug\WcfClient.pdb
+F:\Marta\Studia\Semestr_VI\RSI\L\2\WcfClient\obj\Debug\WcfClient.csproj.AssemblyReference.cache
+F:\Marta\Studia\Semestr_VI\RSI\L\2\WcfClient\obj\Debug\WcfClient.csproj.SuggestedBindingRedirects.cache
+F:\Marta\Studia\Semestr_VI\RSI\L\2\WcfClient\obj\Debug\WcfClient.csproj.CoreCompileInputs.cache
+F:\Marta\Studia\Semestr_VI\RSI\L\2\WcfClient\obj\Debug\WcfClient.exe
+F:\Marta\Studia\Semestr_VI\RSI\L\2\WcfClient\obj\Debug\WcfClient.pdb

@@ -1,14 +1,20 @@
+import com.google.protobuf.ByteString;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 
-import org.example.model.TheRequest;
-import org.example.model.TheResponse;
-import org.example.model.ServiceNameGrpc;
+import org.example.model.*;
 
 public class GrpcServer {
+    static ArrayList<Car> cars = new ArrayList<>();
+
     public static void main(String[] args) {
         int port = 50001;
         System.out.println("Starting gRPC server...");
@@ -18,14 +24,53 @@ public class GrpcServer {
             server.start();
             System.out.println("...Server started");
             server.awaitTermination();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+        cars.add(new Car("Romek", 12, "car1.jpg", true));
+        cars.add(new Car("Tomek", 20, "car2.jpg", true));
+        cars.add(new Car("Bob", 40, "car3.jpg", false));
+
     }
 
     static class ServiceNameImpl extends ServiceNameGrpc.ServiceNameImplBase {
+
+        public void getCars(CarRequest req,
+                            StreamObserver<CarResponse> responseObserver) {
+            //find by name
+            StringBuilder message = new StringBuilder();
+            for (Car car: cars
+                 ) {
+                message.append(car).append("\n");
+            }
+
+            CarResponse response = CarResponse.newBuilder()
+                    .setMessage(message.toString())
+                    .build();
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+
+        public void addCar(CarRequest req,
+                                   StreamObserver<CarResponse> responseObserver) {
+            Car car = new Car(req.getName(), req.getAge(), req.getImage(), req.getIsNew());
+            CarResponse response = CarResponse.newBuilder()
+                    .setMessage("Created car: " + car)
+                    .build();
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+
         public void unaryProcedure(TheRequest req,
                                    StreamObserver<TheResponse> responseObserver) {
             String msg;
@@ -106,35 +151,87 @@ public class GrpcServer {
             responseObserver.onCompleted();
         }
 
-        public void streamFileProcedure(TheRequest req,
-                                    StreamObserver<TheResponse> responseObserver) throws IOException {
+        public void streamFileProcedure(ByteRequest req,
+                                        StreamObserver<ByteResponse> responseObserver) {
 
             String absPath = "/Users/hitit/sem6/RSI/1-Kapala-Michal/GrpcApp/Images/";
-            byte[] bytes = new byte[0];
-            try {
-                File file = new File(absPath + "ServerImages/plik1.jpg");
-                FileInputStream fileInputStream = new FileInputStream(file);
-                long BUF_SIZE = file.length();
-                bytes = new byte[(int) BUF_SIZE];
-                fileInputStream.read(bytes);
-                fileInputStream.close();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+            int BUF_SIZE = 4096;
+            byte[] bytes;
 
-            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(absPath + "ClientImages/output.jpg"))));
-            dos.write(bytes);
-            dos.close();
-
-            TheResponse response = TheResponse.newBuilder()
-                    .setMessage("Zapisano plik!").build();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            try (FileInputStream fis = new FileInputStream(absPath + "ServerImages/serverImage.jpg")){
+                while(fis.available() > 0){
+                    bytes = fis.readNBytes(BUF_SIZE);
+                    ByteResponse response = ByteResponse.newBuilder()
+                            .setChunk(ByteString.copyFrom(bytes))
+                            .setNumOfBytes(BUF_SIZE)
+                            .build();
+                    responseObserver.onNext(response);
+                    Thread.sleep(400);
+                }
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
             }
-            responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
+        private static final Path SERVER_BASE_PATH = Paths.get("/Users/hitit/sem6/RSI/1-Kapala-Michal/GrpcApp/Images/ServerImages");
+        @Override
+        public StreamObserver<FileUploadRequest> uploadFile(StreamObserver<FileUploadResponse> responseObserver) {
+            return new StreamObserver<>() {
+
+
+                // upload context variables
+                OutputStream writer;
+                Status status = Status.IN_PROGRESS;
+
+                @Override
+                public void onNext(FileUploadRequest fileUploadRequest) {
+                    try{
+                        if(fileUploadRequest.hasMetadata()){
+                            writer = getFilePath(fileUploadRequest);
+                        }else{
+                            writeFile(writer, fileUploadRequest.getFile().getContent());
+                        }
+                    }catch (IOException e){
+                        this.onError(e);
+                    }
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+                    status = Status.FAILED;
+                    this.onCompleted();
+                }
+
+                @Override
+                public void onCompleted() {
+                    closeFile(writer);
+                    status = Status.IN_PROGRESS.equals(status) ? Status.SUCCESS : status;
+                    FileUploadResponse response = FileUploadResponse.newBuilder()
+                            .setStatus(status)
+                            .build();
+                    responseObserver.onNext(response);
+                    responseObserver.onCompleted();
+                }
+            };
+        }
+
+        private OutputStream getFilePath(FileUploadRequest request) throws IOException {
+            var fileName = request.getMetadata().getName() + "." + request.getMetadata().getType();
+            return Files.newOutputStream(SERVER_BASE_PATH.resolve(fileName), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        }
+
+        private void writeFile(OutputStream writer, ByteString content) throws IOException {
+            writer.write(content.toByteArray());
+            writer.flush();
+        }
+
+        private void closeFile(OutputStream writer){
+            try {
+                writer.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
+
 }

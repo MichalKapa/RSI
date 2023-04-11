@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/1-Kapala-Michal.iml" filepath="$PROJECT_DIR$/.idea/1-Kapala-Michal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GrpcApp/GrpcApp.iml" filepath="$PROJECT_DIR$/GrpcApp/GrpcApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GrpcApp/GrpcClient/GrpcClient.iml" filepath="$PROJECT_DIR$/GrpcApp/GrpcClient/GrpcClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GrpcApp/GrpcInterface/GrpcInterface.iml" filepath="$PROJECT_DIR$/GrpcApp/GrpcInterface/GrpcInterface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GrpcApp/GrpcServer/GrpcServer.iml" filepath="$PROJECT_DIR$/GrpcApp/GrpcServer/GrpcServer.iml" />
+    </modules>
+  </component>
+</project>

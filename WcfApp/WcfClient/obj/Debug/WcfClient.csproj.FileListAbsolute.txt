@@ -9,3 +9,6 @@ C:\Users\Michał\RSI\WcfApp\WcfClient\obj\Debug\WcfClient.csproj.CoreCompileInpu
 C:\Users\Michał\RSI\WcfApp\WcfClient\obj\Debug\WcfClient.csproj.CopyComplete
 C:\Users\Michał\RSI\WcfApp\WcfClient\obj\Debug\WcfClient.exe
 C:\Users\Michał\RSI\WcfApp\WcfClient\obj\Debug\WcfClient.pdb
+C:\Users\Michał\RSI\WcfApp\WcfClient\bin\Debug\CallbackService.dll
+C:\Users\Michał\RSI\WcfApp\WcfClient\bin\Debug\CallbackService.pdb
+C:\Users\Michał\RSI\WcfApp\WcfClient\bin\Debug\CallbackService.dll.config

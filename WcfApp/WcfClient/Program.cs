@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CallbackService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
@@ -6,8 +7,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WcfClient.ServiceReference1;
-using WcfService;
 using IService1 = WcfService.IService1;
+using WcfClient.ServiceReference2;
 
 namespace WcfClient
 {
@@ -49,11 +50,23 @@ namespace WcfClient
             result = asyResult.Result;
             Console.WriteLine("2...HMultiplyAsync Result = " + result);
             Console.WriteLine();
+
+            SuperCalcCallback myCbHandler = new SuperCalcCallback();
+            InstanceContext instanceContext = new InstanceContext(myCbHandler);
+            SuperCalcClient myClient3 = new SuperCalcClient(instanceContext);
+            double value1 = 10;
+            Console.WriteLine("...calling Factorial({0})...", value1);
+            myClient3.Factorial(value1);
+            Console.WriteLine();
+
             Console.ReadLine(); // to not finish app immediately:
                                 // Step 3: Closing the client - closes connection and clears resources.
            
             ((IClientChannel)myClient).Close();
             Console.WriteLine("...Client closed - FINISHED");
+
+            myClient3.Close();
+            Console.WriteLine("CLIENT3 - STOP");
         }
 
         static async Task<double> callHMultiplyAsync(double n1, double n2, Service1Client myClient2)
@@ -63,6 +76,16 @@ namespace WcfClient
             Console.WriteLine("2......finished HMultipleAsync");
             return reply;
         }
+
+        class SuperCalcCallback : CallbackService.ISuperCalcCallback
+        {
+            public void FactorialResult(double result)
+            {
+                //here the result is consumed
+                Console.WriteLine(" Factorial = {0}", result);
+            }
+        }
+
 
     }
 }

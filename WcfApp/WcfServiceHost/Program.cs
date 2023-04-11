@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CallbackService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
@@ -33,11 +34,23 @@ namespace WcfServiceHost
             ServiceEndpoint endpoint2 = myHost.AddServiceEndpoint(
              typeof(IService1),
              binding2, "endpoint2");
-            try
+            Uri baseAddress3 = new Uri("http://localhost:10007/SuperCalc");
+            ServiceHost myHost3 = new
+            ServiceHost(typeof(MySuperCalc), baseAddress3);
+            WSDualHttpBinding myBinding3 = new WSDualHttpBinding();
+            ServiceEndpoint endpoint3 =
+            myHost3.AddServiceEndpoint(typeof(ISuperCalc),
+            myBinding3, "endpoint3");
+            myHost3.Description.Behaviors.Add(smb);
+                try
             {
                 // Krok 5 Uruchomienie serwisu.
                 myHost.Open();
                 Console.WriteLine("Service is started and running.");
+
+                myHost3.Open();
+                Console.WriteLine("--> Service SuperCalc is running.");
+
                 Console.WriteLine("Press <ENTER> to STOP service...");
                 Console.WriteLine();
 
@@ -51,11 +64,13 @@ namespace WcfServiceHost
 
                 Console.ReadLine(); // aby nie kończyć natychmiast:
                 myHost.Close();
+                myHost3.Close();
             }
             catch (CommunicationException ce)
             {
                 Console.WriteLine("Exception occured: {0}", ce.Message);
                 myHost.Abort();
+                myHost3.Abort();
             }
         }
     }

@@ -51,6 +51,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CallbackService\CallbackService.csproj">
+      <Project>{2d2ff450-f2ed-4eb0-9035-f628d6cb1f70}</Project>
+      <Name>CallbackService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WcfService\WcfService.csproj">
       <Project>{8c72624b-27fc-4e2b-b546-b93e986e63a3}</Project>
       <Name>WcfService</Name>

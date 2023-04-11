@@ -1,0 +1,7 @@
+C:\Users\Michał\RSI\WcfApp\CallbackService\bin\Debug\CallbackService.dll.config
+C:\Users\Michał\RSI\WcfApp\CallbackService\bin\Debug\CallbackService.dll
+C:\Users\Michał\RSI\WcfApp\CallbackService\bin\Debug\CallbackService.pdb
+C:\Users\Michał\RSI\WcfApp\CallbackService\obj\Debug\CallbackService.csproj.AssemblyReference.cache
+C:\Users\Michał\RSI\WcfApp\CallbackService\obj\Debug\CallbackService.csproj.CoreCompileInputs.cache
+C:\Users\Michał\RSI\WcfApp\CallbackService\obj\Debug\CallbackService.dll
+C:\Users\Michał\RSI\WcfApp\CallbackService\obj\Debug\CallbackService.pdb

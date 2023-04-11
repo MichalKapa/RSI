@@ -1,0 +1,11 @@
+C:\Users\Michał\RSI\WcfApp\WcfClient\bin\Debug\WcfClient.exe.config
+C:\Users\Michał\RSI\WcfApp\WcfClient\bin\Debug\WcfClient.exe
+C:\Users\Michał\RSI\WcfApp\WcfClient\bin\Debug\WcfClient.pdb
+C:\Users\Michał\RSI\WcfApp\WcfClient\bin\Debug\WcfService.dll
+C:\Users\Michał\RSI\WcfApp\WcfClient\bin\Debug\WcfService.pdb
+C:\Users\Michał\RSI\WcfApp\WcfClient\bin\Debug\WcfService.dll.config
+C:\Users\Michał\RSI\WcfApp\WcfClient\obj\Debug\WcfClient.csproj.AssemblyReference.cache
+C:\Users\Michał\RSI\WcfApp\WcfClient\obj\Debug\WcfClient.csproj.CoreCompileInputs.cache
+C:\Users\Michał\RSI\WcfApp\WcfClient\obj\Debug\WcfClient.csproj.CopyComplete
+C:\Users\Michał\RSI\WcfApp\WcfClient\obj\Debug\WcfClient.exe
+C:\Users\Michał\RSI\WcfApp\WcfClient\obj\Debug\WcfClient.pdb

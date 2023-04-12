@@ -15,7 +15,7 @@ namespace WcfServiceHost
         static void Main(string[] args)
         {
             // Krok 1 URI dla bazowego adresu serwisu
-            Uri baseAddress = new Uri("http://localhost:10007/Service1");
+            Uri baseAddress = new Uri("http://localhost:8733/Design_Time_Addresses/WcfService/Service1/");
             // Krok 2 Instancja serwisu
             ServiceHost myHost = new
             ServiceHost(typeof(Service1), baseAddress);
@@ -34,13 +34,12 @@ namespace WcfServiceHost
             ServiceEndpoint endpoint2 = myHost.AddServiceEndpoint(
              typeof(IService1),
              binding2, "endpoint2");
-            Uri baseAddress3 = new Uri("http://localhost:10007/SuperCalc");
-            ServiceHost myHost3 = new
-            ServiceHost(typeof(MySuperCalc), baseAddress3);
+
+            Uri baseAddress3 = new Uri("http://localhost:8733/Design_Time_Addresses/WcfService/SuperCalc");
+            ServiceHost myHost3 = new ServiceHost(typeof(MySuperCalc), baseAddress3);
             WSDualHttpBinding myBinding3 = new WSDualHttpBinding();
             ServiceEndpoint endpoint3 =
-            myHost3.AddServiceEndpoint(typeof(ISuperCalc),
-            myBinding3, "endpoint3");
+            myHost3.AddServiceEndpoint(typeof(ISuperCalc), myBinding3, "endpoint3");
             myHost3.Description.Behaviors.Add(smb);
                 try
             {

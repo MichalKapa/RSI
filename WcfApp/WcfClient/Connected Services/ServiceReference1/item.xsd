@@ -45,25 +45,4 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="Factorial">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="n" type="xs:double" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="DoSomething">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="sec" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="FactorialResult">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="result" type="xs:double" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
 </xs:schema>

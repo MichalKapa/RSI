@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="207c968b-7d9b-4323-a814-1e50e6fb4e22" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="c4dcb106-9f8f-4579-a73c-2522d3c49e34" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,13 +19,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:10007/SuperCalc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/WcfService/SuperCalc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="MySuperCalc.wsdl" MetadataType="Wsdl" ID="e4a81b72-af64-4f23-9243-203603296a34" SourceId="1" SourceUrl="http://localhost:10007/SuperCalc?wsdl" />
-    <MetadataFile FileName="SuperCalc.xsd" MetadataType="Schema" ID="1159a27c-a7a4-406c-aeb0-cdd5b2393f30" SourceId="1" SourceUrl="http://localhost:10007/SuperCalc?xsd=xsd0" />
-    <MetadataFile FileName="SuperCalc1.xsd" MetadataType="Schema" ID="4bd613f3-0899-4fd5-9a6e-36b37c2c6a9a" SourceId="1" SourceUrl="http://localhost:10007/SuperCalc?xsd=xsd1" />
-    <MetadataFile FileName="SuperCalc.disco" MetadataType="Disco" ID="5ee96ac0-30a1-45d7-93fc-a1395f55b8a2" SourceId="1" SourceUrl="http://localhost:10007/SuperCalc?disco" />
+    <MetadataFile FileName="SuperCalc.disco" MetadataType="Disco" ID="68ddad62-5e11-4d80-ac84-980018ec139b" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfService/SuperCalc?disco" />
+    <MetadataFile FileName="Service1.wsdl" MetadataType="Wsdl" ID="ea00dae9-5c68-412d-93a4-f7b7e511bb2d" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfService/SuperCalc?wsdl" />
+    <MetadataFile FileName="SuperCalc.xsd" MetadataType="Schema" ID="07108671-95b0-4855-b317-8da10df5ccda" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfService/SuperCalc?xsd=xsd0" />
+    <MetadataFile FileName="SuperCalc1.xsd" MetadataType="Schema" ID="ae159027-687a-48f6-a01a-22d9dfb74acc" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfService/SuperCalc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

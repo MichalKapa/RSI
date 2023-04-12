@@ -1,5 +1,5 @@
-cd C:\Users\Michał\RSI\WcfApp\WcfServiceHost\bin\Debug
+cd [...]\RSI\WcfApp\WcfServiceHost\bin\Debug
 WcfServiceHost.exe
 
-C:\Users\Michał\RSI\WcfApp\WcfClient\bin\Debug>
+cd [...]\RSI\WcfApp\WcfClient\bin\Debug
 WcfClient.exe

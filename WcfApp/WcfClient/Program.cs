@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using WcfClient.ServiceReference1;
 using IService1 = WcfService.IService1;
 using WcfClient.ServiceReference2;
+using Service1Client = WcfClient.ServiceReference1.Service1Client;
 
 namespace WcfClient
 {
@@ -23,7 +24,7 @@ namespace WcfClient
             // binding, address, endpoint address:
             BasicHttpBinding myBinding = new BasicHttpBinding();
             baseAddress = new
-            Uri("http://localhost:10007/Service1/endpoint1");
+            Uri("http://localhost:8733/Design_Time_Addresses/WcfService/Service1/endpoint1");
             EndpointAddress eAddress = new EndpointAddress(baseAddress);
             // channel factory:
             ChannelFactory<IService1> myCF = new
@@ -47,6 +48,12 @@ namespace WcfClient
             Console.WriteLine("2...calling HMultiply ASYNCHRONOUSLY !!!");
             Task<double> asyResult = callHMultiplyAsync(1.1, -3.3, myClient2);
             Thread.Sleep(100);
+
+            Console.Write("...calling Multiply (for endpoint2) - ");
+            result = myClient2.Multiply(-3.7, 9.5); //just example values
+            Console.WriteLine("Result = " + result);
+            Console.WriteLine();
+
             result = asyResult.Result;
             Console.WriteLine("2...HMultiplyAsync Result = " + result);
             Console.WriteLine();
@@ -57,6 +64,11 @@ namespace WcfClient
             double value1 = 10;
             Console.WriteLine("...calling Factorial({0})...", value1);
             myClient3.Factorial(value1);
+            Console.WriteLine();
+
+            Console.Write("...calling Multiply (for endpoint2) - ");
+            result = myClient2.Multiply(-3.7, 9.5); //just example values
+            Console.WriteLine("Result = " + result);
             Console.WriteLine();
 
             Console.ReadLine(); // to not finish app immediately:
@@ -77,7 +89,7 @@ namespace WcfClient
             return reply;
         }
 
-        class SuperCalcCallback : CallbackService.ISuperCalcCallback
+        class SuperCalcCallback : ServiceReference2.ISuperCalcCallback
         {
             public void FactorialResult(double result)
             {

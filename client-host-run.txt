@@ -1,0 +1,5 @@
+cd [...]\RSI\WcfApp\WcfServiceHost\bin\Debug
+WcfServiceHost.exe
+
+cd [...]\RSI\WcfApp\WcfClient\bin\Debug
+WcfClient.exe

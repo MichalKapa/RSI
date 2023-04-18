@@ -4,11 +4,9 @@ import jakarta.jws.WebService;
 import java.util.List;
 
 @WebService(serviceName = "PersonService",
-        endpointInterface = "org.example.jaxws.server.PersonService")
+        endpointInterface = "org.example.PersonService")
 public class PersonServiceImpl implements PersonService {
-    private PersonRepository dataRepository = new DataRepository() {
-
-    };
+    private PersonRepository dataRepository = new PersonRepositoryImpl();
     @WebMethod
     public Person getPerson(int id) throws PersonNotFoundEx {
         System.out.println("...called getPerson id="+id);

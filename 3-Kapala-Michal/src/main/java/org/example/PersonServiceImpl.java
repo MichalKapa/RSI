@@ -1,9 +1,11 @@
+package org.example;
+
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebService;
 
 import java.util.List;
 
-@WebService(serviceName = "PersonService",
+@WebService(serviceName = "org.example.PersonService",
         endpointInterface = "org.example.PersonService")
 public class PersonServiceImpl implements PersonService {
     private PersonRepository dataRepository = new PersonRepositoryImpl();

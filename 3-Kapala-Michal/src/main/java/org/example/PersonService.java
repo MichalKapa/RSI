@@ -1,3 +1,5 @@
+package org.example;
+
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebService;
 

@@ -1,7 +1,0 @@
-F:\Marta\Studia\Semestr_VI\RSI\L\2\WcfServiceLibrary\bin\Debug\WcfServiceLibrary.dll.config
-F:\Marta\Studia\Semestr_VI\RSI\L\2\WcfServiceLibrary\bin\Debug\WcfServiceLibrary.dll
-F:\Marta\Studia\Semestr_VI\RSI\L\2\WcfServiceLibrary\bin\Debug\WcfServiceLibrary.pdb
-F:\Marta\Studia\Semestr_VI\RSI\L\2\WcfServiceLibrary\obj\Debug\WcfService.csproj.AssemblyReference.cache
-F:\Marta\Studia\Semestr_VI\RSI\L\2\WcfServiceLibrary\obj\Debug\WcfService.csproj.CoreCompileInputs.cache
-F:\Marta\Studia\Semestr_VI\RSI\L\2\WcfServiceLibrary\obj\Debug\WcfServiceLibrary.dll
-F:\Marta\Studia\Semestr_VI\RSI\L\2\WcfServiceLibrary\obj\Debug\WcfServiceLibrary.pdb

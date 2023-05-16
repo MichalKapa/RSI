@@ -21,4 +21,30 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.sun.xml.ws</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <wsdlFiles>
+                        <wsdlFile>
+                            ${project.basedir}/src/main/resources/personservice.wsdl
+                        </wsdlFile>
+                    </wsdlFiles>
+                    <packageName>org.example.jaxws.server_topdown</packageName>
+                    <sourceDestDir>${project.basedir}/src/main/java/</sourceDestDir>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

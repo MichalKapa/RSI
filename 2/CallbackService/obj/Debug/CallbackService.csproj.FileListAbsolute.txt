@@ -1,7 +1,0 @@
-F:\Marta\Studia\Semestr_VI\RSI\L\2\CallbackService\bin\Debug\CallbackService.dll.config
-F:\Marta\Studia\Semestr_VI\RSI\L\2\CallbackService\bin\Debug\CallbackService.dll
-F:\Marta\Studia\Semestr_VI\RSI\L\2\CallbackService\bin\Debug\CallbackService.pdb
-F:\Marta\Studia\Semestr_VI\RSI\L\2\CallbackService\obj\Debug\CallbackService.csproj.AssemblyReference.cache
-F:\Marta\Studia\Semestr_VI\RSI\L\2\CallbackService\obj\Debug\CallbackService.csproj.CoreCompileInputs.cache
-F:\Marta\Studia\Semestr_VI\RSI\L\2\CallbackService\obj\Debug\CallbackService.dll
-F:\Marta\Studia\Semestr_VI\RSI\L\2\CallbackService\obj\Debug\CallbackService.pdb

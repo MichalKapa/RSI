@@ -17,4 +17,5 @@ public interface PersonService {
     List<Person> getAllPersons();
     @WebMethod
     int countPersons();
+    Person updatePerson(int id, String name, int age) throws PersonNotFoundEx;
 } 

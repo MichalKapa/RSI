@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car Management</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <script type="text/javascript"> 
+        var myUrl = "http://localhost:8080/cars" 
+
+        var Car = {
+            "id":0,
+            "brand":"-",
+            "year":0,
+            "color":"-",
+            "isNew":null,
+            "status": null
+        } 
+        const StatusEnum = {
+            LISTED: "LISTED",
+            RENTED: "RENTED",
+            NOT_LISTED: "NOT_LISTED"
+        };
+
+        $(document).ready(function() {
+            getAllCars();
+        });
+
+        function getAllCars() {
+            $.ajax({
+            type: "GET",
+            url: myUrl,
+            dataType: "json",
+            }) 
+            .done(function(response) {
+                console.log(response)
+                showCarList(response._embedded.carList);
+            })
+            .fail(function(errMsg) {
+            alert(JSON.stringify(errMsg));
+            }); 
+        }
+        function showCarList(carList) {
+            let carTableData = ''
+            let newRow = ''
+
+            var myTable = document.getElementById("my_table")
+            var rows = myTable.getElementsByTagName("tr");
+
+            // Start from the last row (excluding the header row) and remove each row
+            for (var i = rows.length - 1; i > 0; i--) {
+                myTable.removeChild(rows[i]);
+            }
+            
+            carList.forEach(car => {
+                newRow = document.createElement("tr");
+                let buttons = ''
+                console.log(car.brand)
+                let editButton = document.createElement("td")
+                editButton.innerHTML='<button class="yellow">edit</button>'
+                editButton.onclick = function () {
+                    onEdit(car)
+                }
+
+                if(car._links.deleteCar != undefined)
+                    buttons += `<td><button class="red" onclick="onDelete(${car.id})">delete</button></td>`
+                else 
+                    buttons += `<td><button class="red hidden" onclick="onDelete(${car.id})">delete</button></td>`
+                if(car._links.returnCar != undefined)
+                    buttons += `<td><button class="green" onclick="onReturn(${car.id})">return</button></td>`
+                else 
+                    buttons += `<td><button class="red hidden" onclick="onDelete(${car.id})">delete</button></td>`
+                if(car._links.rentCar != undefined)
+                    buttons += `<td><button class="blue" onclick="onRent(${car.id})">rent</button></td>`
+                else 
+                    buttons += `<td><button class="red hidden" onclick="onDelete(${car.id})">delete</button></td>`
+                
+                carTableData = 
+                    `<td>${car.id}</td>` +
+                    `<td>${car.brand}</td>` +
+                    `<td>${car.year}</td>` +
+                    `<td>${car.color}</td>` +
+                    `<td>${car.isNew}</td>` +
+                    `<td>${car.status}</td>` + buttons
+                    newRow.innerHTML = carTableData;
+                    newRow.append(editButton)
+                    myTable.appendChild(newRow)
+            });
+
+        }
+
+        function onDelete(id) {
+            $.ajax( {
+                type: "DELETE",
+                url: myUrl + "/" + id,
+                dataType: "json",
+            })
+            .done(function(msg) {
+                getAllCars();
+            })
+            .fail(function(errMsg) {
+                alert(JSON.stringify(errMsg));
+            }); 
+        }
+        function onRent(id) {
+            $.ajax( {
+                type: "PATCH",
+                url: myUrl + "/" + id + "/rent",
+                dataType: "json",
+            })
+            .done(function(msg) {
+                getAllCars();
+            })
+            .fail(function(errMsg) {
+                alert(JSON.stringify(errMsg));
+            });
+        }
+        function onReturn(id) {
+            $.ajax( {
+                type: "PATCH",
+                url: myUrl + "/" + id + "/return",
+                dataType: "json",
+            })
+            .done(function(msg) {
+                getAllCars();
+            })
+            .fail(function(errMsg) {
+                alert(JSON.stringify(errMsg));
+            });
+        }
+        
+        function onEdit(car) {
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+            console.log(car)
+            document.getElementById("edit_window").style.display = "block"
+            
+            const IdInput = document.getElementById("edit_id")
+            IdInput.value = car.id;
+
+            const brandInput = document.getElementById("edit_brand")
+            brandInput.value = car.brand;
+
+            const yearInput = document.getElementById("edit_year")
+            yearInput.value = car.year;
+
+            const colorInput = document.getElementById("edit_color")
+            colorInput.value = car.color;
+
+            const isNewInput = document.getElementById("edit_isNew")
+            isNewInput.value = car.isNew;
+            isNewInput.checked = car.isNew;
+
+            const statusInput = document.getElementById("edit_status")
+            statusInput.value = car.status;
+        }
+
+
+        function saveEditedCar() {
+
+            const IdInput = document.getElementById("edit_id")
+
+            const brandInput = document.getElementById("edit_brand")
+            
+            const yearInput = document.getElementById("edit_year")
+            
+            const colorInput = document.getElementById("edit_color")
+            
+            const isNewInput = document.getElementById("edit_isNew")
+
+            const statusInput = document.getElementById("edit_status")
+            
+
+            var car = Car;
+            car.id = IdInput.value;
+            car.brand = brandInput.value;
+            car.year = yearInput.value;
+            car.color = colorInput.value;
+            car.isNew = isNewInput.checked;
+            car.status = statusInput.value;
+            
+            if(car.id != 0 && car.brand !="" && car.year != 0 && car.color!="") {
+                document.getElementById("edit_window").style.display = "none"
+
+                $.ajax( {
+                    type: "PUT",
+                    url: myUrl + "/" + car.id,
+                    data: JSON.stringify(car),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                })
+                .done(function(msg) {
+                    getAllCars();
+                })
+                .fail(function(errMsg) {
+                    alert(JSON.stringify(errMsg));
+                }); 
+            }
+            else {
+                alert("Wypełnij wszystkie dane!")
+            }
+            
+        }
+
+        function addCar() {
+            const IdInput = document.getElementById("id")
+
+            const brandInput = document.getElementById("brand")
+            
+            const yearInput = document.getElementById("year")
+            
+            const colorInput = document.getElementById("color")
+            
+            const isNewInput = document.getElementById("isNew")
+            
+            const statusInput = document.getElementById("status")
+
+            
+            var car = Car;
+            
+            car.id = IdInput.value;
+            car.brand = brandInput.value;
+            car.year = yearInput.value;
+            car.color = colorInput.value;
+            car.isNew = isNewInput.checked;
+            car.status = statusInput.value;
+
+            if(car.id != 0 && car.brand !="" && car.year != 0 && car.color!="") {
+
+                $.ajax( {
+                    type: "POST",
+                    url: myUrl,
+                    data: JSON.stringify(car),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                })
+                .done(function(msg) {
+                    getAllCars();
+                })
+                .fail(function(errMsg) {
+                    alert(JSON.stringify(errMsg));
+                }); 
+            }
+            else {
+                alert("Wypełnij wszystkie dane!")
+            }
+        }
+
+</script>
+
+<div style="margin-left: 300px;">
+    <h1 style="margin-top: 50px;">Add Car</h1>
+
+    <label for="id">ID</label>
+    <input id="id" type="number">
+
+    <label for="brand">Marka</label>
+    <input id="brand" type="text">
+
+    <label for="year">Rocznik</label>
+    <input id="year" type="number">
+
+    <label for="color">Kolor</label>
+    <input id="color" type="text">
+
+    <label for="isNew">czyNowe</label>
+    <input style="transform: scale(1.5);" id="isNew" type="checkbox">
+
+    <label for="status">Status</label>
+    <select id="status" style="transform: scale(1.5); margin-bottom: 50px; margin-left: 25px;">
+        <option value="LISTED">LISTED</option>
+        <option value="RENTED">RENTED</option>
+        <option value="NOT_LISTED">NOT_LISTED</option>
+    </select>
+      
+
+    <button style="display: block; width: 216px;" type="button" id="add" onclick="addCar()">Add</button> 
+</div>
+
+<div id="edit_window">
+    <h1 >Edit Car</h1>
+
+    <label for="edit_id">ID</label>
+    <input  id="edit_id" readonly type="number">
+
+    <label for="edit_brand">Marka</label>
+    <input id="edit_brand" type="text">
+
+    <label for="edit_year">Rocznik</label>
+    <input id="edit_year" type="number">
+
+    <label for="edit_color">Kolor</label>
+    <input id="edit_color" type="text">
+
+    <label for="edit_isNew">czyNowe</label>
+    <input style="transform: scale(1.5);" id="edit_isNew" type="checkbox">
+
+    <label for="edit_status">Status</label>
+    <select id="edit_status" style="transform: scale(1.5); margin-bottom: 50px; margin-left: 25px;">
+        <option value="LISTED">LISTED</option>
+        <option value="RENTED">RENTED</option>
+        <option value="NOT_LISTED">NOT_LISTED</option>
+    </select>
+
+    <button style="display: block; width: 216px;" type="button" id="edit" onclick="saveEditedCar()">Edit</button> 
+</div>
+
+<div style="margin-left: 200px">
+    <h1 style="margin-top: 60px;">Cars</h1>
+    <table id="my_table">
+        <tr>
+            <th>id</th>
+            <th>marka</th>
+            <th>rocznik</th>
+            <th>kolor</th>
+            <th>czyNowe</th>
+            <th>status</th>
+            <th>OPERACJE</th>
+        </tr>
+    </table>
+</div>
+
+<div style="margin-bottom: 200px;"></div>
+
+<!-- <h2>Add a Car</h2>
+<div>
+    <label for="makeInput">Make:</label>
+    <input type="text" id="makeInput">
+</div>
+<div>
+    <label for="modelInput">Model:</label>
+    <input type="text" id="modelInput">
+</div>
+<div>
+    <label for="statusInput">Status:</label>
+    <input type="text" id="statusInput">
+</div>
+<div>
+    <button onclick="addCar()">Add Car</button>
+</div>
+
+<h2>Update a Car</h2>
+<div>
+    <label for="updateIdInput">Car ID:</label>
+    <input type="text" id="updateIdInput">
+</div>
+<div>
+    <label for="makeInput">Make:</label>
+    <input type="text" id="makeInput">
+</div>
+<div>
+    <label for="modelInput">Model:</label>
+    <input type="text" id="modelInput">
+</div>
+<div>
+    <label for="statusInput">Status:</label>
+    <input type="text" id="statusInput">
+</div>
+<div>
+    <button onclick="updateCar($('#updateIdInput').val())">Update Car</button>
+</div> -->
+<style>
+    body {
+        background-color: rgb(216, 216, 216);
+        font-size: 20px;
+    }
+
+    table {
+        background-color: white;
+        border: 1px solid black;
+    }
+
+    td {
+      border: 0.1px solid black;
+      padding:16px;
+    }
+
+    button {
+        font-size: 16px;
+        border-radius: 20px;
+        box-shadow: 0.5px 0.5px;
+        cursor: pointer;
+    }
+
+    label {
+        display: block;
+    }
+
+    input {
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+
+    .red {
+        background-color: rgb(253, 197, 187);
+    }
+
+    .green {
+        background-color: greenyellow;
+    }
+
+    .blue {
+        background-color:aqua;
+    }
+
+    .yellow {
+        background-color: yellow;
+    }
+
+    .white {
+        background-color: white;
+    }
+
+    .gray {
+        background-color: rgb(223, 223, 223);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    #edit_window {
+        display: none;
+        height: 400px;
+        width: 500px;
+        position: absolute;
+        right: 100px;
+        top: 25px;
+    }
+
+
+
+  </style>
+</body>
+</html>

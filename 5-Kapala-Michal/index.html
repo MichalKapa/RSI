@@ -17,11 +17,6 @@
             "isNew":null,
             "status": null
         } 
-        const StatusEnum = {
-            LISTED: "LISTED",
-            RENTED: "RENTED",
-            NOT_LISTED: "NOT_LISTED"
-        };
 
         $(document).ready(function() {
             getAllCars();
@@ -48,7 +43,6 @@
             var myTable = document.getElementById("my_table")
             var rows = myTable.getElementsByTagName("tr");
 
-            // Start from the last row (excluding the header row) and remove each row
             for (var i = rows.length - 1; i > 0; i--) {
                 myTable.removeChild(rows[i]);
             }
@@ -322,43 +316,6 @@
 
 <div style="margin-bottom: 200px;"></div>
 
-<!-- <h2>Add a Car</h2>
-<div>
-    <label for="makeInput">Make:</label>
-    <input type="text" id="makeInput">
-</div>
-<div>
-    <label for="modelInput">Model:</label>
-    <input type="text" id="modelInput">
-</div>
-<div>
-    <label for="statusInput">Status:</label>
-    <input type="text" id="statusInput">
-</div>
-<div>
-    <button onclick="addCar()">Add Car</button>
-</div>
-
-<h2>Update a Car</h2>
-<div>
-    <label for="updateIdInput">Car ID:</label>
-    <input type="text" id="updateIdInput">
-</div>
-<div>
-    <label for="makeInput">Make:</label>
-    <input type="text" id="makeInput">
-</div>
-<div>
-    <label for="modelInput">Model:</label>
-    <input type="text" id="modelInput">
-</div>
-<div>
-    <label for="statusInput">Status:</label>
-    <input type="text" id="statusInput">
-</div>
-<div>
-    <button onclick="updateCar($('#updateIdInput').val())">Update Car</button>
-</div> -->
 <style>
     body {
         background-color: rgb(216, 216, 216);
